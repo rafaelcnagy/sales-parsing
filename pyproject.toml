@@ -10,6 +10,7 @@ packages = [{include = "sales_parcing"}]
 python = "^3.8"
 Django = "^4.1.2"
 psycopg2-binary = "^2.9.5"
+python-decouple = "^3.6"
 
 
 [build-system]
