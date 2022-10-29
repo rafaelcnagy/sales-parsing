@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+    <nav class="navbar mx-6 mt-3">
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <a class="button is-light" href="{% url 'upload' %} ">Upload file</a>
+            </div>
+        </div>
+    </nav>
+    <div class="mx-6 mb-6">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>
