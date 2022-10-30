@@ -23,3 +23,34 @@ class UploadFileView(FormView):
 class TransactionListView(ListView):
     template_name = 'uploader/list.html'
     model = Transaction
+
+    def get_queryset(self):
+        transactions = super().get_queryset() 
+        persons = Person.objects.all()
+
+        queryset = {
+            'transactions': transactions,
+            'persons': persons,
+        }
+
+        return queryset
+
+class TransactionListPersonView(ListView):
+    template_name = 'uploader/list.html'
+    model = Transaction
+
+    def get_queryset(self):
+        transactions = super().get_queryset() 
+        
+        person = Person.objects.get(id=self.kwargs['id'])
+        transactions = transactions.filter(person=person)
+
+        persons = Person.objects.all()
+
+        queryset = {
+            'transactions': transactions,
+            'persons': persons,
+            'person_selected': person
+        }
+
+        return queryset

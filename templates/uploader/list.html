@@ -4,18 +4,57 @@
 
 <div class="hero-body">
   <div class="container">
-    <h1 class="title has-text-centered">Transactions</h1>
 
-    <table class="table columns is-centered">
+    <div class="columns block">
+      <div class="column is-4">
+        {% if object_list.person_selected %}
+          <div class="notification is-primary">
+            <h2 class="is-size-4">{{object_list.person_selected.name}}</h2>
+            <p>Saldo: R${{object_list.person_selected.get_balance|floatformat:2}}</p>
+            <p>Produtor de: 
+              {% for product in object_list.person_selected.producers.all %}
+                {{ product.name }}, 
+              {% endfor%}
+            </p>
+            <p>Afiliado de: 
+              {% for product in object_list.person_selected.affiliate.all %}
+                {{ product.name }}, 
+              {% endfor%}
+            </p>
+            <p>Participou de {{ object_list.person_selected.transaction_set.count }} transações</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="column">
+        <h1 class="title is-2 has-text-centered">Transactions</h1>
+      </div>
+
+      <div class="column is-4">
+        <div class="select is-link">
+          <select onchange="javascript:location.href = this.value;">
+            <option value="{% url 'list' %}">TODOS</option>
+            {% for person in object_list.persons %}
+              <option value="{% url 'list-person' person.id %}" 
+              {% if person.id == request.resolver_match.kwargs.id %}selected{% endif %}
+              >{{ person.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+
+    <table class="table columns is-centered block">
       <tr>
         <th>Tipo</th>
-        <th>Produto</th>
+        <th>Produto</th> 
         <th>Pessoa</th>
         <th>Valor</th>
         <th>Horário</th>
       </tr>
 
-    {% for transaction in object_list %}
+    {% for transaction in object_list.transactions %}
       <tr class="has-background-{% if transaction.type == 3 %}danger{% else %}success{% endif %}-light">
         <td>
           {% if transaction.type == 1 %}

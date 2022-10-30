@@ -4,6 +4,9 @@ class Person(models.Model):
     name = models.CharField(max_length=20, unique=True)
     balance = models.IntegerField(default=0)
 
+    def get_balance(self):
+        return self.balance/100
+
 class Product(models.Model):
     name = models.CharField(max_length=30, unique=True)
     producers = models.ManyToManyField(Person, related_name='producers')
