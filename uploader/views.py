@@ -20,13 +20,13 @@ class UploadFileView(FormView):
         if form.is_valid():
             try:
                 parse_sales(request.FILES['file'])
-                messages.success(request, 'Sales parsed successful.')
+                messages.success(request, 'Transações adicionadas com sucesso.')
                 return HttpResponseRedirect(self.success_url)
             except:
-                messages.error(request, 'Error on parsing.')
+                messages.error(request, 'Erro ao processar o arquivo.')
                 return HttpResponseRedirect(reverse_lazy('upload'))
         else:
-            messages.error(request, 'File is invalid.')
+            messages.error(request, 'Arquivo é invalido.')
             return HttpResponseRedirect(reverse_lazy('upload'))
 
 class TransactionListView(ListView):
