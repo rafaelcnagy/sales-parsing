@@ -7,7 +7,7 @@ def parse_sales(file):
     def detach_transaction(line):
         return int(line[:1]), line[1:26], line[26:56].strip(), int(line[56:66]), line[66:].strip()
     
-    file_content = file.read()
+    file_content = file.open(mode='r').read()
     
     for content_line in wrap(file_content.decode('utf-8'), 86):
         type, date_str, product_name, value, person_name = detach_transaction(content_line)
