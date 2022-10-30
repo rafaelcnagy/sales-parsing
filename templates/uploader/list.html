@@ -1,7 +1,9 @@
 {% extends "base.html" %}
-{% block content %}
 {% load humanize %}
 
+{% block title %}Lista de transações{% endblock %}
+
+{% block content %}
 <div class="hero-body">
   <div class="container">
 
@@ -11,7 +13,7 @@
       </div>
 
       <div class="column">
-        <h1 class="title is-2 has-text-centered">Transactions</h1>
+        <h1 class="title is-2 has-text-centered">Transações</h1>
       </div>
 
       <div class="column is-2">
@@ -84,8 +86,8 @@
         <div class="columns is-centered"> 
           <div class="column is-4">
             <div class="notification is-danger is-warning">
-              <p class="is-size-4">No transactions yet.</p>
-              <a class="button is-light" href="{% url 'upload' %} ">Upload file</a>
+              <p class="is-size-4">Nenhuma transação adicionada.</p>
+              <a class="button is-light" href="{% url 'upload' %} ">Envie o arquivo de transações</a>
             </div>
           </div>
         </div>
