@@ -14,7 +14,18 @@
             </div>
         </div>
     </nav>
+
     <div class="mx-6 mb-6">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="notification is-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         {% block content %}
         {% endblock content %}
     </div>
