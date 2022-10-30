@@ -11,7 +11,6 @@ def parse_sales(file):
     
     for content_line in wrap(file_content.decode('utf-8'), 86):
         type, date_str, product_name, value, person_name = detach_transaction(content_line)
-        print(type, date_str, product_name, value, person_name)
 
         date = datetime.datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S%z')
         
