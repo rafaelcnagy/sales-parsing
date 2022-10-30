@@ -15,3 +15,6 @@ class Transaction(models.Model):
     date = models.DateTimeField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     value = models.IntegerField()
+
+    def get_value(self):
+        return self.value/100

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+{% load humanize %}
+
+<div class="hero-body">
+  <div class="container">
+    <h1 class="title has-text-centered">Transactions</h1>
+
+    <table class="table columns is-centered">
+      <tr>
+        <th>Tipo</th>
+        <th>Produto</th>
+        <th>Pessoa</th>
+        <th>Valor</th>
+        <th>Horário</th>
+      </tr>
+
+    {% for transaction in object_list %}
+      <tr class="has-background-{% if transaction.type == 3 %}danger{% else %}success{% endif %}-light">
+        <td>
+          {% if transaction.type == 1 %}
+            Venda por produtor
+          {% elif transaction.type == 2 %}
+            Venda por afiliado
+          {% elif transaction.type == 3 %}
+            Comissão paga
+          {% elif transaction.type == 4 %}
+            Comissão recebida
+          {% endif %}
+        </td>
+        <td>{{ transaction.person.name }}</td>
+        <td>R${{ transaction.get_value|floatformat:2 }}</td>
+        <td>{{ transaction.product.name }}</td>
+        <td>{{ transaction.date }}</td>
+      </li>
+    {% empty %}
+        <li>No transactions yet.</li>
+        <a class="button is-light" href="{% url 'upload' %} ">Upload file</a>
+    {% endfor %}
+    </ul>
+
+  </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,6 +1,8 @@
 from django.shortcuts import HttpResponseRedirect
 from uploader.forms import UploadFileForm
 from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
+from uploader.models import Person, Transaction
 
 from uploader.parser import parse_sales
 
@@ -17,3 +19,7 @@ class UploadFileView(FormView):
             parse_sales(request.FILES['file'])
             return HttpResponseRedirect(self.success_url)
 
+
+class TransactionListView(ListView):
+    template_name = 'uploader/list.html'
+    model = Transaction
