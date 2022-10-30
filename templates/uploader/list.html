@@ -6,8 +6,32 @@
   <div class="container">
 
     <div class="columns block">
-      <div class="column is-4">
-        {% if object_list.person_selected %}
+      <div class="column is-2">
+        
+      </div>
+
+      <div class="column">
+        <h1 class="title is-2 has-text-centered">Transactions</h1>
+      </div>
+
+      <div class="column is-2">
+        <div class="select is-link">
+          <select onchange="javascript:location.href = this.value;">
+            <option value="{% url 'list' %}">TODOS</option>
+            {% for person in object_list.persons %}
+              <option value="{% url 'list-person' person.id %}" 
+              {% if person.id == request.resolver_match.kwargs.id %}selected{% endif %}
+              >{{ person.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+    
+
+    {% if object_list.person_selected %}
+      <div class="columns block is-centered">
+        <div class="column is-half">
           <div class="notification is-primary">
             <h2 class="is-size-4">{{object_list.person_selected.name}}</h2>
             <p>Saldo: R${{object_list.person_selected.get_balance|floatformat:2}}</p>
@@ -23,26 +47,9 @@
             </p>
             <p>Participou de {{ object_list.person_selected.transaction_set.count }} transações</p>
           </div>
-        {% endif %}
-      </div>
-
-      <div class="column">
-        <h1 class="title is-2 has-text-centered">Transactions</h1>
-      </div>
-
-      <div class="column is-4">
-        <div class="select is-link">
-          <select onchange="javascript:location.href = this.value;">
-            <option value="{% url 'list' %}">TODOS</option>
-            {% for person in object_list.persons %}
-              <option value="{% url 'list-person' person.id %}" 
-              {% if person.id == request.resolver_match.kwargs.id %}selected{% endif %}
-              >{{ person.name }}</option>
-            {% endfor %}
-          </select>
         </div>
       </div>
-    </div>
+    {% endif %}
 
 
     <table class="table columns is-centered block">
@@ -54,30 +61,36 @@
         <th>Horário</th>
       </tr>
 
-    {% for transaction in object_list.transactions %}
-      <tr class="has-background-{% if transaction.type == 3 %}danger{% else %}success{% endif %}-light">
-        <td>
-          {% if transaction.type == 1 %}
-            Venda por produtor
-          {% elif transaction.type == 2 %}
-            Venda por afiliado
-          {% elif transaction.type == 3 %}
-            Comissão paga
-          {% elif transaction.type == 4 %}
-            Comissão recebida
-          {% endif %}
-        </td>
-        <td>{{ transaction.person.name }}</td>
-        <td>R${{ transaction.get_value|floatformat:2 }}</td>
-        <td>{{ transaction.product.name }}</td>
-        <td>{{ transaction.date }}</td>
-      </li>
-    {% empty %}
-        <li>No transactions yet.</li>
-        <a class="button is-light" href="{% url 'upload' %} ">Upload file</a>
-    {% endfor %}
-    </ul>
-
+      {% for transaction in object_list.transactions %}
+        <tr class="has-background-{% if transaction.type == 3 %}danger{% else %}success{% endif %}-light">
+          <td>
+            {% if transaction.type == 1 %}
+              Venda por produtor
+            {% elif transaction.type == 2 %}
+              Venda por afiliado
+            {% elif transaction.type == 3 %}
+              Comissão paga
+            {% elif transaction.type == 4 %}
+              Comissão recebida
+            {% endif %}
+          </td>
+          <td>{{ transaction.person.name }}</td>
+          <td>R${{ transaction.get_value|floatformat:2 }}</td>
+          <td>{{ transaction.product.name }}</td>
+          <td>{{ transaction.date }}</td>
+        </tr>
+      
+        {% empty %}
+        <div class="columns is-centered"> 
+          <div class="column is-4">
+            <div class="notification is-danger is-warning">
+              <p class="is-size-4">No transactions yet.</p>
+              <a class="button is-light" href="{% url 'upload' %} ">Upload file</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </table>
   </div>
 </div>
 
