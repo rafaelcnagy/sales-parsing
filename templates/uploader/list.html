@@ -7,9 +7,8 @@
 <div class="hero-body">
   <div class="container">
 
-    <div class="columns block">
+    <div class="columns mb-5">
       <div class="column is-2">
-        
       </div>
 
       <div class="column">
@@ -32,7 +31,7 @@
     
 
     {% if object_list.person_selected %}
-      <div class="columns block is-centered">
+      <div class="columns my-5 is-centered">
         <div class="column is-half">
           <div class="notification is-primary">
             <h2 class="is-size-4">{{object_list.person_selected.name}}</h2>
@@ -54,45 +53,48 @@
     {% endif %}
 
 
-    <table class="table columns is-centered block">
-      <tr>
-        <th>Tipo</th>
-        <th>Produto</th> 
-        <th>Pessoa</th>
-        <th>Valor</th>
-        <th>Horário</th>
-      </tr>
+    {% if object_list.transactions.count > 0 %}
 
-      {% for transaction in object_list.transactions %}
-        <tr class="has-background-{% if transaction.type == 3 %}danger{% else %}success{% endif %}-light">
-          <td>
-            {% if transaction.type == 1 %}
-              Venda por produtor
-            {% elif transaction.type == 2 %}
-              Venda por afiliado
-            {% elif transaction.type == 3 %}
-              Comissão paga
-            {% elif transaction.type == 4 %}
-              Comissão recebida
-            {% endif %}
-          </td>
-          <td>{{ transaction.person.name }}</td>
-          <td>R${{ transaction.get_value|floatformat:2 }}</td>
-          <td>{{ transaction.product.name }}</td>
-          <td>{{ transaction.date }}</td>
+      <table class="table columns is-centered mt-5">
+        <tr>
+          <th>Tipo</th>
+          <th>Produto</th>
+          <th>Pessoa</th>
+          <th>Valor</th>
+          <th>Horário</th>
         </tr>
-      
-        {% empty %}
-        <div class="columns is-centered"> 
-          <div class="column is-4">
-            <div class="notification is-danger is-warning">
-              <p class="is-size-4">Nenhuma transação adicionada.</p>
-              <a class="button is-light" href="{% url 'upload' %} ">Envie o arquivo de transações</a>
-            </div>
+
+        {% for transaction in object_list.transactions %}
+          <tr class="has-background-{% if transaction.type == 3 %}danger{% else %}success{% endif %}-light">
+            <td>
+              {% if transaction.type == 1 %}
+                Venda por produtor
+              {% elif transaction.type == 2 %}
+                Venda por afiliado
+              {% elif transaction.type == 3 %}
+                Comissão paga
+              {% elif transaction.type == 4 %}
+                Comissão recebida
+              {% endif %}
+            </td>
+            <td>{{ transaction.person.name }}</td>
+            <td>R${{ transaction.get_value|floatformat:2 }}</td>
+            <td>{{ transaction.product.name }}</td>
+            <td>{{ transaction.date }}</td>
+          </tr>
+          {% endfor %}
+      </table>
+        
+    {% else %}
+      <div class="columns is-centered"> 
+        <div class="column is-4">
+          <div class="notification is-danger is-warning has-text-centered">
+            <p class="is-size-4">Nenhuma transação adicionada.</p>
+            <a class="button is-light m-3" href="{% url 'upload' %} ">Envie o arquivo de transações</a>
           </div>
         </div>
-      {% endfor %}
-    </table>
+      </div>
+    {% endif %}
   </div>
 </div>
 
