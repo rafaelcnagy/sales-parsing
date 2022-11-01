@@ -12,6 +12,7 @@ Este projeto foi feito como desafio técnico em processo seletivo. As instruçõ
 - Django
 - Bulma
 - Docker
+- PostgreSQL
 
 # Instalação
 
