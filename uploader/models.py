@@ -11,7 +11,8 @@ class Person(models.Model):
     balance = models.IntegerField(default=0)
 
     def get_balance(self):
-        return self.balance/100
+        """ Return person balance in float"""
+        return self.balance/100.0
 
 class Product(models.Model):
     """
@@ -43,4 +44,5 @@ class Transaction(models.Model):
     value = models.IntegerField()
 
     def get_value(self):
-        return self.value/100
+        """ Return transaction value in float"""
+        return self.value/100.0
