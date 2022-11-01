@@ -4,7 +4,10 @@ from textwrap import wrap
 
 
 def parse_sales(file):
+    """ This function reads each line of the uploaded file and saves the data in db """
+    
     def detach_transaction(line):
+        """ This sub function splits a data text line by fields """
         return int(line[:1]), line[1:26], line[26:56].strip(), int(line[56:66]), line[66:].strip()
     
     file_content = file.open(mode='r').read()
